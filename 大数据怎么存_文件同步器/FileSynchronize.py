@@ -7,10 +7,10 @@ from boto3.session import Session
 
 service_name = 's3'
 bucketName = 'tiit'
-access_key = ''
-secret_key = ''
-endpoint_url = ''
-src_dir = r'C:\tiit'   # 源文件目录地址
+access_key = 'D3F24E7956EFF2C9152B'
+secret_key = 'W0M4NDVDMTc2QkQwRTc0OTAxQTgzMTMxMTM4NUVG'
+endpoint_url = 'http://scut.depts.bingosoft.net:29997'
+src_dir = r'C:\Users\ThinkPad\Desktop\tiit'   # 源文件目录地址
 # Max size in bytes before uploading in parts.
 AWS_UPLOAD_MAX_SIZE = 20 * 1024 * 1024
 # Size of parts when uploading in parts
@@ -230,9 +230,7 @@ def synchronize(s3_client, mod):
         for bkey in bucket_list.keys():
             if bkey in local_list:
                 sign = comp(local_list, bucket_list, bkey)
-                if sign > 0:
-                    upload(s3_client, bkey)
-                elif sign < 0:
+                if sign != 0:
                     download(s3_client, bkey)
             else:
                 download(s3_client, bkey)
