@@ -6,11 +6,11 @@ import time
 def lambda_handler(event, context):
     evtdata = event["Records"][0]["s3"]
     bucket = evtdata["bucket"]["name"]
-    endpoint_url = "http://10.16.0.1:81"
+    endpoint_url = ""
 
     s3Client = boto3.client("s3",
-                            aws_access_key_id="D3F24E7956EFF2C9152B",
-                            aws_secret_access_key="W0M4NDVDMTc2QkQwRTc0OTAxQTgzMTMxMTM4NUVG",
+                            aws_access_key_id="",
+                            aws_secret_access_key="",
                             endpoint_url=endpoint_url
                             )
 
