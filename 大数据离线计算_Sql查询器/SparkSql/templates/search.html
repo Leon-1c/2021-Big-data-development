@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <br>
+    <br>
+    <br>
+    <title>Search</title>
+    <link rel="stylesheet" type="text/css" href="../static/search.css" />
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+    <style>
+        body {
+            text-align: center;
+            background-color: #4A374A;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="title">
+        <h3 style="color: white;">SQL语句</h3>
+        <form method="POST">
+            <textarea placeholder="Enter sql statement" class="area" rows="10" cols="50" name="Sql" id='Sql'></textarea>
+            <input type="text" placeholder="Table name" name="Table" id='Table'></input>
+        </form>
+        <br>
+        <!-- <button class="but" type="submit">search</button> -->
+        <a href="javascript:void(0);" onclick="POSTTable()" class="but">Show Tables</a>
+        <a href="javascript:void(0);" onclick="POSTSearch()" class="but">Run</a>
+        <a href="javascript:void(0);" onclick="POSTField()" class="but"
+            style="margin-left: 220px;position: absolute;width: 90px;margin-top: -10px;height: 20px;">Show Fields</a>
+        <br>
+        <br>
+    </div>
+
+    <div class="body" id='table'>
+    </div>
+
+</body>
+
+<script type="text/javascript">
+    function POSTSearch() {
+        var value = $('#Sql').val();
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:5000/search',
+            data: {
+                Sql: value
+            },
+            dataType: "text", // 注意：这里是指希望服务端返回的数据类型
+            success: function (data) { // 返回数据根据结果进行相应的处理
+                $("#table").html(data);
+            },
+            error: function () {
+                $("#table").html("获取数据失败！");
+            }
+        });
+    }
+    function POSTTable() {
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:5000/search',
+            data: {
+                Sql: 'show tables'
+            },
+            dataType: "text", // 注意：这里是指希望服务端返回的数据类型
+            success: function (data) { // 返回数据根据结果进行相应的处理
+                $("#table").html(data);
+            },
+            error: function () {
+                $("#table").html("获取数据失败！");
+            }
+        });
+
+    }
+    function POSTField() {
+        var value = $('#Table').val();
+        value = 'desc ' + value
+        console.log(value)
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:5000/search',
+            data: {
+                Sql: value
+            },
+            dataType: "text", // 注意：这里是指希望服务端返回的数据类型
+            success: function (data) { // 返回数据根据结果进行相应的处理
+                $("#table").html(data);
+            },
+            error: function () {
+                $("#table").html("获取数据失败！");
+            }
+        });
+    }
+</script>
+
+</html>
